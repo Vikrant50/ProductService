@@ -18,7 +18,7 @@ public class FakeStoreProductService implements ProductService{
         this.restTemplate = restTemplate;
     }
 
-    private Product convertFaheStoreDtoToProduct(FakeStoreProductDto dto){
+    private Product convertFakeStoreDtoToProduct(FakeStoreProductDto dto){
 
         Product product = new Product();
         product.setId(dto.getId());
@@ -43,7 +43,7 @@ public class FakeStoreProductService implements ProductService{
             return null;
         }
 
-        return  convertFaheStoreDtoToProduct(fakeStoreProductDto);
+        return  convertFakeStoreDtoToProduct(fakeStoreProductDto);
     }
 
     @Override
