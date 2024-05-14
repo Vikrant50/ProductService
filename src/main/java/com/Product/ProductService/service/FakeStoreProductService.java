@@ -6,8 +6,8 @@ import com.Product.ProductService.models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class FakeStoreProductService implements ProductService{
@@ -18,7 +18,7 @@ public class FakeStoreProductService implements ProductService{
         this.restTemplate = restTemplate;
     }
 
-    private Product convertFaheStoreDtoToProduct(FakeStoreProductDto dto){
+    private Product convertFakeStoreDtoToProduct(FakeStoreProductDto dto){
 
         Product product = new Product();
         product.setId(dto.getId());
@@ -43,11 +43,19 @@ public class FakeStoreProductService implements ProductService{
             return null;
         }
 
-        return  convertFaheStoreDtoToProduct(fakeStoreProductDto);
+        return  convertFakeStoreDtoToProduct(fakeStoreProductDto);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        FakeStoreProductDto[] fakeStoreProductDtos =
+                restTemplate.getForObject("https://fakestoreapi.com/products",FakeStoreProductDto[].class);
+
+
+        List<Product> response = new ArrayList<>();
+        for(FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos){
+            response.add(convertFakeStoreDtoToProduct(fakeStoreProductDto));
+        }
+        return response;
     }
 }
